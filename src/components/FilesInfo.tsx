@@ -30,10 +30,11 @@ const FilesInfo = () => {
 
   const [files, setFiles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  
 
   const { user }  = useUser();
   const userId: string = user?.id || '';
-  const userImage = user?.imageUrl;
+  const userImage = user?.imageUrl || '';
 
   const fetchFiles = async() => {
 
