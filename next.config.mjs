@@ -4,7 +4,7 @@ const nextConfig = {
         instrumentationHook: true,
     },
     images: {
-        domains: ['storage-buddy.s3.eu-north-1.amazonaws.com'],
+        domains: ['storage-buddy.s3.eu-north-1.amazonaws.com', 'img.clerk.com'],
       },
 };
 
