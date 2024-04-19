@@ -25,8 +25,11 @@ import pdfIcon from "../../public/pdf-icon.png";
 import docIcon from "../../public/doc-icon.png";
 import imageIcon from "../../public/imageIcon.png";
 
+interface FeedProps {
+  searchInput: string;
+}
 
-const FilesInfo = () => {
+const FilesInfo: React.FC<FeedProps> = ({ searchInput }) => {
 
   const [files, setFiles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +67,7 @@ const FilesInfo = () => {
   
 
   console.log("Fetched:", files);
+  console.log("Ftyy:", searchInput);
 
   if(isLoading){
     return (
@@ -73,9 +77,11 @@ const FilesInfo = () => {
     )
   }
 
+  const filtered = files.filter((item) => item.fileName.toLowerCase().includes(searchInput.toLowerCase()));
+
   return (
     <div className="w-full flex justify-center sm:items-start sm:justify-start flex-wrap gap-7 py-9 sm:pl-16 sm:pr-7 pt-2 h-[500px] overflow-y-auto mt-4">
-      {files.length > 0 && files.map((file) => (
+      {files.length > 0 && filtered.map((file) => (
         <div className="card sm:w-64 w-full mx-5 sm:mx-0 rounded-[12px] p-4 cursor-pointer bg-[#1b1e23] bg-opacity-35 border-2 border-[#22262b] shadow-xl">
         <div className="card-header w-full flex items-center justify-between">
         <div className="flex items-start justify-start gap-2">

@@ -5,16 +5,23 @@ import React, { useState } from "react";
 import CreateBtn from "./CreateBtn";
 import UploadFile from "./UploadFile";
 
-const Header = () => {
+interface HeaderProps {
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Header: React.FC<HeaderProps> = ({ setSearchInput }) => {
 
   const [open, setOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
 
   const handleOpenModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
 
   let date = new Date();
   let time = date.getHours(); 
+
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  }
 
   return (
     <div className="text-gray-300 w-full py-2 md:py-6 px-4 md:pl-16 md:pr-16">
@@ -26,7 +33,7 @@ const Header = () => {
           <p className="text-[0.95rem] text-gray-400">Welcome back!</p> 
         </div>
         <div className="searchBar relative px-1 md:px-0">
-          <input type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="Search files, folders, videos..." className="bg-[#16181b] border-2 border-gray-600 py-3 text-sm pl-9 pr-4 rounded-[8px] sm:w-80 w-full sm:mr-16" />
+          <input type="text" onChange={handleInputChange} placeholder="Search files, folders, videos..." className="bg-[#16181b] border-2 border-gray-600 py-3 text-sm pl-9 pr-4 rounded-[8px] sm:w-80 w-full sm:mr-16" />
           <Search className="absolute top-3 left-4 md:left-3 w-4 md:w-5 text-gray-400" />
         </div> 
         <div className="pr-[6px] flex ml-1">
