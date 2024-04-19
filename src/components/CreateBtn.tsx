@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { Plus } from 'lucide-react'
-import UploadFile from './UploadFile'
 
 const CreateBtn = ({ handleOpenModal }: any) => {
 

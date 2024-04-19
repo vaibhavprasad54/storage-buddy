@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -9,52 +11,69 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Dropzone from 'react-dropzone'
-import dropIcon from "../../public/dropFileIcon.svg"
-import Image from 'next/image';
-import { uploadToS3 } from '@/lib/s3';
+import { FolderOpen } from 'lucide-react';
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useUser } from '@clerk/nextjs';
+import axios from "axios";
+import FileDropZone from './FileDropZone';
 
+type Inputs = {
+  fileName: string
+  fileUrl: string
+  userId: string
+}
 
 
 const UploadFile = ({open, setOpen, closeModal}: any) => {
 
-  const handleFileUpload = async ( acceptedFiles: any ) => {
-    console.log("New:",acceptedFiles);
-    const file = acceptedFiles[0];
-    if(file.size > 200 * 1024 * 1024){
-      alert('Please upload a smaller file');
-      return
-    }
+  const [fileS3Url, setFileS3Url] = useState("");
+
+  const { user }  = useUser();
+  console.log("af",user);
+
+  const handleFileS3Url = (value: string) => {
+    setFileS3Url(value);
+  }
+
+  //========= React Hook Form 
+  const { register, handleSubmit, formState : { errors } } = useForm<Inputs>()
+
+  const onSubmit : SubmitHandler<Inputs> = async(data) => {
+    const formData = { ...data, fileUrl: fileS3Url, userId: user?.id, userName: user?.firstName };
+    console.log("File data:", formData);
 
     try {
-      const data = await uploadToS3(file);
-      console.log("File", data);
+      if(fileS3Url !== undefined || fileS3Url !== null || fileS3Url !== ""){
+        const response = await axios.post('/api/files/post', formData);
+        console.log("Response:", response.data);
+      }
+
     } catch (error) {
-      console.log("Error while uploading", error)
+      console.log("Error:", error);
     }
+
   }
+
 
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[725px] bg-[#16181b] border-2 border-gray-700">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <DialogHeader>
-          <DialogTitle className='text-gray-100'>Upload File</DialogTitle>
-          <DialogDescription className='py-4'>
-            <Dropzone onDrop={handleFileUpload}>
-              {({getRootProps, getInputProps}) => (
-                <div className='flex items-center justify-center mt-1'>
-                  <section className='border-[3px] border-dashed bg-[#1d2024] border-gray-500 rounded-[8px] px-5 py-4 h-56 w-10/12 flex items-center justify-center'>
-                  <div {...getRootProps()} className='w-full flex items-center justify-center flex-col'>
-                    <input {...getInputProps()} />
-                    <Image src={dropIcon} height={75} width={75} alt='sample-drop-image' />
-                    <p className='pt-2 pb-0'>Drag n Drop files here...</p>
-                    {/* <p className='text-center px-4 py-[6px] mt-2 bg-[#457de6] text-gray-100 rounded-[4px] cursor-pointer'>Choose Files</p> */}
-                  </div>
-                </section>
-                </div>
-              )}
-            </Dropzone>
+          <DialogTitle className='text-gray-100 flex items-center gap-2'>
+            <p>Upload File</p>
+            <FolderOpen className='text-green-400' />
+          </DialogTitle>
+          <DialogDescription className='py-4 mx-5'>
+
+            <div className='flex flex-col items-start justify-center'>
+              <label className='text-gray-300 font-semibold text-base'>File Name</label>
+              <input type="text" {...register("fileName")} placeholder='Enter file name' className='px-5 py-3 rounded-[5px] mt-1 bg-[#23272c] shadow-xl w-full outline-none text-slate-200 font-semibold tracking-wider' />
+            </div>
+
+            <FileDropZone onStateChange={handleFileS3Url} />
+            
           </DialogDescription>
         </DialogHeader>
         
@@ -62,6 +81,7 @@ const UploadFile = ({open, setOpen, closeModal}: any) => {
           <Button onClick={closeModal} type="submit" className='bg-transparent border-2 border-[#277dff] text-sm'>Cancel</Button>
           <Button type="submit" className='bg-[#277dff] hover:bg-[#2775e9] text-sm'>Upload</Button>
         </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
     </div>

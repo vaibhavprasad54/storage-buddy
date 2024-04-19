@@ -13,7 +13,7 @@ export default async function Home() {
     <div className="main h-[90vh] w-screen flex flex-col items-center">
       <div className="py-2 px-7 text-center flex flex-col items-center justify-center h-[90%]">
         <div>
-          <h2 className="text-4xl md:text-8xl md:h-[6.5rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-100">
+          <h2 className="text-4xl md:text-8xl md:h-[6.5rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#277dff] to-blue-200">
             Storage Buddy
           </h2>
         </div>
@@ -24,13 +24,13 @@ export default async function Home() {
 
         {!isAuth ? (
           <Link href="/sign-in">
-            <Button className="text-xl bg-[#457de6] hover:bg-[#4673c5] mt-4 px-6 py-1">
+            <Button className="text-xl bg-[#277dff] hover:bg-[#2775e9] mt-4 px-6 py-1">
               Log in
             </Button>
           </Link>
         ) : (
           <Link href="/dashboard">
-            <Button className="text-lg sm:text-xl bg-[#457de6] hover:bg-[#4673c5] mt-4 px-6 py-1">
+            <Button className="text-lg sm:text-xl bg-[#277dff] hover:bg-[#2775e9] mt-4 px-6 py-1">
               Go to Dashboard
             </Button>
           </Link>

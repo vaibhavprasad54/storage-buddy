@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    experimental: {
+        instrumentationHook: true,
+    },
+    images: {
+        domains: ['storage-buddy.s3.eu-north-1.amazonaws.com'],
+      },
+};
 
 export default nextConfig;
