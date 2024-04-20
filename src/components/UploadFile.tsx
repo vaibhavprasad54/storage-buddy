@@ -71,7 +71,7 @@ const UploadFile = ({ open, setOpen, closeModal }: any) => {
           toast({
             title: "File uploaded successfully",
             description: "Come back anytime and access your files.",
-          })
+          });
         }
       }
     } catch (error) {
@@ -127,16 +127,17 @@ const UploadFile = ({ open, setOpen, closeModal }: any) => {
 
             <DialogFooter>
               <Button
-                onClick={closeModal}
-                type="submit"
+                onClick={(e) => { e.preventDefault(); 
+                  closeModal(); 
+                }}
                 className="bg-transparent border-2 border-[#277dff] text-sm"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                disabled={fileS3Url !== ""}
-                className="bg-[#277dff] hover:bg-[#2775e9] text-sm"
+                disabled={loading || !fileS3Url || Object.keys(errors).length > 0}
+                className="bg-[#277dff] hover:bg-[#2775e9] text-sm w-20"
               >
                 {loading ? (
                   <Loader size={20} />

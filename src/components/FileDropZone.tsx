@@ -17,12 +17,12 @@ const FileDropZone: React.FC<ChildProps> = ({ onStateChange }) => {
 
   const handleFileUpload = async (acceptedFiles: any) => {
     console.log("New:", acceptedFiles);
-    setFileS3Name(acceptedFiles[0].name);
     const file = acceptedFiles[0];
-    if (file.size > 200 * 1024 * 1024) {
+    if (file.size > 10 * 1024 * 1024) {
       alert("Please upload a smaller file");
       return;
     }
+    setFileS3Name(acceptedFiles[0].name);
 
     try {
       const data = await uploadToS3(file);

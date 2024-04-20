@@ -24,6 +24,7 @@ import videoIcon from "../../public/video-icon.png";
 import pdfIcon from "../../public/pdf-icon.png";
 import docIcon from "../../public/doc-icon.png";
 import imageIcon from "../../public/imageIcon.png";
+import useStore from "@/lib/store";
 
 interface FeedProps {
   searchInput: string;
@@ -33,6 +34,7 @@ const FilesInfo: React.FC<FeedProps> = ({ searchInput }) => {
 
   const [files, setFiles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const setData = useStore((state) => state.setData);
   
 
   const { user }  = useUser();
@@ -49,6 +51,7 @@ const FilesInfo: React.FC<FeedProps> = ({ searchInput }) => {
           },
         });
         setFiles(res.data.reverse());
+        setData(res.data.reverse());
         setIsLoading(false);
       } catch (error) {
         console.log("Cannot fetch files", error);
@@ -63,7 +66,7 @@ const FilesInfo: React.FC<FeedProps> = ({ searchInput }) => {
     }
   
     fetchFiles();
-  }, [userId]);
+  }, [userId, setData]);
   
 
   console.log("Fetched:", files);
