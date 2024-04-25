@@ -111,11 +111,11 @@ const FilesInfo: React.FC<FeedProps> = ({ searchInput }) => {
         <DropdownMenuContent className="w-48 mr-44">
         <DropdownMenuGroup>
           <DropdownMenuItem className="cursor-pointer group">
-            <span className="">Profile</span>
+            <span className="">Favourite</span>
             <DropdownMenuShortcut className="opacity-100"> <Star strokeWidth={2.5} className="w-4 group-hover:text-yellow-400" /> </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer group">
-            <span className="">Billing</span>
+            <span className="">Delete</span>
             <DropdownMenuShortcut className="opacity-100"> <Trash strokeWidth={2.5} className="w-4" /> </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>     
