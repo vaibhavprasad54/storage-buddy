@@ -24,8 +24,8 @@ const Header: React.FC<HeaderProps> = ({ setSearchInput }) => {
   }
 
   return (
-    <div className="text-gray-300 w-full py-2 md:py-6 px-4 md:pl-16 md:pr-16">
-      <div className="flex flex-col md:flex-row items-start justify-start gap-3 sm:gap-16 w-full">
+    <div className="text-gray-300 w-full py-2 md:py-6 px-4 md:pl-16 md:pr-24">
+      <div className="flex flex-col md:flex-row items-start justify-between gap-3 sm:gap-16 w-full">
         <div className="greeting">
           <h2 className="text-[#3f88f5] text-base md:text-lg font-semibold text-[1.04rem] text-wrap sm:text-nowrap">
             {`Good ${time < 12 ? 'Morning' : time >= 12 && time <=15 ? 'Afternoon' : 'Evening'},  Vaibhav`}
