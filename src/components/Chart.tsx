@@ -52,8 +52,6 @@ const Chart = () => {
                 ]
             ]
         }}
-        height={250}
-        width={290}
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#808080"
         arcLinkLabelsThickness={2}
