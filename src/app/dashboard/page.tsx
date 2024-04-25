@@ -6,7 +6,7 @@ import Header from '@/components/Header'
 import MobileMenu from '@/components/MobileMenu'
 import Sidebar from '@/components/Sidebar'
 import React, { useState } from 'react'
-import Overview from '@/components/Overview'
+// import Overview from '@/components/Overview'
 
 const Page = () => {
 
